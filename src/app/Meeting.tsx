@@ -108,12 +108,16 @@ const Meeting: React.FC = () => {
       };
     }
   }, [clientRef]);
-  const toggleVideo = () => {
+  const toggleVideo = async () => {
     if (localVideoTrack) {
       if (videoActive) {
-        localVideoTrack.stop(); // Stops the video track, freeing up the camera
+        // Stop the video track and unpublish it
+        localVideoTrack.stop();
+        await clientRef.current?.unpublish(localVideoTrack);
       } else {
-        localVideoTrack.play("local-container"); // Restarts the video track
+        // Restart the video track and publish it again
+        await clientRef.current?.publish(localVideoTrack);
+        localVideoTrack.play("local-container");
       }
       setVideoActive(!videoActive); // Toggle the state
     }
@@ -125,6 +129,7 @@ const Meeting: React.FC = () => {
       setAudioActive(!audioActive); // Update state to reflect change.
     }
   };
+
   console.log("remoteUsers", remoteUsers);
   return (
     <div>
