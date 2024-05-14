@@ -140,7 +140,17 @@ const Meeting: React.FC = () => {
       ></div>
       <button onClick={toggleVideo}>Toggle Video</button>
       <button onClick={toggleAudio}>Toggle Audio</button>
-      <div id="remote-container"></div>
+      <div id="remote-container">
+        {remoteUsers?.map((user) => (
+          <div
+            key={user.uid}
+            id={user.uid.toString()}
+            style={{ width: "320px", height: "240px", backgroundColor: "blue" }}
+          >
+            {/* The video will be rendered here */}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
