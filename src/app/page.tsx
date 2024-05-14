@@ -9,7 +9,7 @@ import AgoraRTC, {
   IRemoteAudioTrack,
   UID,
   IAgoraRTCRemoteUser,
-} from "agora-rtc-sdk-ng";
+} from "agora-rtc-sdk-ng"; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 const Meeting: React.FC = () => {
   const [client] = useState<IAgoraRTCClient>(
@@ -19,7 +19,7 @@ const Meeting: React.FC = () => {
     useState<IMicrophoneAudioTrack | null>(null);
   const [localVideoTrack, setLocalVideoTrack] =
     useState<ICameraVideoTrack | null>(null);
-  const [remoteUsers, setRemoteUsers] = useState<IAgoraRTCRemoteUser[]>([]);
+  const [remoteUsers, setRemoteUsers] = useState<IAgoraRTCRemoteUser[]>([]); // eslint-disable-line @typescript-eslint/no-unused-vars
   const [videoActive, setVideoActive] = useState(true); // State to manage video track activity
   const [audioActive, setAudioActive] = useState(true);
   useEffect(() => {
