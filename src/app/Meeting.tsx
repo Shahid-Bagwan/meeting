@@ -70,6 +70,9 @@ const Meeting: React.FC = () => {
                 document
                   .getElementById("remote-container")
                   ?.appendChild(playerContainer);
+              } else {
+                // Clear any existing video elements in the container
+                playerContainer.innerHTML = "";
               }
               remoteVideoTrack.play(playerContainer);
             }
@@ -140,15 +143,26 @@ const Meeting: React.FC = () => {
       <button onClick={toggleVideo}>Toggle Video</button>
       <button onClick={toggleAudio}>Toggle Audio</button>
       <div id="remote-container">
-        {remoteUsers?.map((user) => (
-          <div
-            key={user.uid}
-            id={user.uid.toString()}
-            style={{ width: "320px", height: "240px", backgroundColor: "blue" }}
-          >
-            {/* The video will be rendered here */}
-          </div>
-        ))}
+        {remoteUsers?.map((user) => {
+          // Check if the div already exists
+          const playerContainer = document.getElementById(user.uid.toString());
+          if (!playerContainer) {
+            return (
+              <div
+                key={user.uid}
+                id={user.uid.toString()}
+                style={{
+                  width: "320px",
+                  height: "240px",
+                  backgroundColor: "blue",
+                }}
+              >
+                {/* The video will be rendered here */}
+              </div>
+            );
+          }
+          return null; // Don't create a new div if it already exists
+        })}
       </div>
     </div>
   );
