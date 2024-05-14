@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import AgoraRTC, {
   IAgoraRTCClient,
   ICameraVideoTrack,
@@ -12,7 +12,7 @@ import AgoraRTC, {
 } from "agora-rtc-sdk-ng";
 
 const Meeting: React.FC = () => {
-  const [client, setClient] = useState<IAgoraRTCClient | null>(null);
+  const clientRef = useRef<IAgoraRTCClient | null>(null);
   const [localAudioTrack, setLocalAudioTrack] =
     useState<IMicrophoneAudioTrack | null>(null);
   const [localVideoTrack, setLocalVideoTrack] =
@@ -23,7 +23,7 @@ const Meeting: React.FC = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const initClient = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-      setClient(initClient);
+      clientRef.current = initClient;
       const joinRoom = async () => {
         try {
           const APP_ID: string = "44ac98e9fc0c42e2bcfa9546ff2766d8"; // Replace with your Agora App ID
@@ -31,7 +31,7 @@ const Meeting: React.FC = () => {
             "007eJxTYBDeeDJ4Vr60jp2s+aR/ryf3iUxhy5um88hGLeU3Q2uDbZcCg4lJYrKlRaplWrJBsolRqlFSclqipamJWVqakbmZWYpFOpNzWkMgI4PlemtWRgYIBPFZGHITM/MYGACgFBys"; // Replace with your token if you have enabled token security
           const UID: UID | null = null; // Set UID or null to let Agora assign one
 
-          await client?.join(APP_ID, "main", TOKEN, UID);
+          await clientRef.current?.join(APP_ID, "main", TOKEN, UID);
 
           const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
           const videoTrack = await AgoraRTC.createCameraVideoTrack();
@@ -43,10 +43,10 @@ const Meeting: React.FC = () => {
             localContainer.innerHTML = ""; // Clear any existing video elements
           }
           videoTrack.play("local-container");
-          await client?.publish([audioTrack, videoTrack]);
+          await clientRef.current?.publish([audioTrack, videoTrack]);
 
-          client?.on("user-published", async (user, mediaType) => {
-            await client?.subscribe(user, mediaType);
+          clientRef.current?.on("user-published", async (user, mediaType) => {
+            await clientRef.current?.subscribe(user, mediaType);
             // Update remote users state
             setRemoteUsers((prevUsers) => {
               const newUsers = [...prevUsers];
@@ -79,7 +79,7 @@ const Meeting: React.FC = () => {
             }
           });
 
-          client?.on("user-unpublished", (user) => {
+          clientRef.current?.on("user-unpublished", (user) => {
             // Remove user from remote users state
             setRemoteUsers((prevUsers) =>
               prevUsers.filter((u) => u.uid !== user.uid)
@@ -90,7 +90,7 @@ const Meeting: React.FC = () => {
             playerContainer?.remove();
           });
 
-          client?.on("user-left", (user) => {
+          clientRef.current?.on("user-left", (user) => {
             setRemoteUsers((prevUsers) =>
               prevUsers.filter((u) => u.uid !== user.uid)
             );
@@ -111,10 +111,11 @@ const Meeting: React.FC = () => {
         localAudioTrack?.close();
         localVideoTrack?.stop();
         localVideoTrack?.close();
-        client?.leave();
+        clientRef.current?.leave();
+        clientRef.current = null;
       };
     }
-  }, []);
+  }, [clientRef]);
   const toggleVideo = () => {
     if (localVideoTrack) {
       if (videoActive) {
