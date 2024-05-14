@@ -56,7 +56,7 @@ const Meeting: React.FC = () => {
               }
               return newUsers;
             });
-
+            console.log("remoteUsers", remoteUsers);
             if (mediaType === "video") {
               const remoteVideoTrack = user.videoTrack as IRemoteVideoTrack;
               let playerContainer = document.getElementById(
@@ -84,20 +84,12 @@ const Meeting: React.FC = () => {
             setRemoteUsers((prevUsers) =>
               prevUsers.filter((u) => u.uid !== user.uid)
             );
-            const playerContainer = document.getElementById(
-              user.uid.toString()
-            );
-            playerContainer?.remove();
           });
 
           clientRef.current?.on("user-left", (user) => {
             setRemoteUsers((prevUsers) =>
               prevUsers.filter((u) => u.uid !== user.uid)
             );
-            const playerContainer = document.getElementById(
-              user.uid.toString()
-            );
-            playerContainer?.remove();
           });
         } catch (error) {
           console.log("error", error);
@@ -133,6 +125,7 @@ const Meeting: React.FC = () => {
       setAudioActive(!audioActive); // Update state to reflect change.
     }
   };
+  console.log("remoteUsers", remoteUsers);
   return (
     <div>
       <div
