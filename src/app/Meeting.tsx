@@ -28,7 +28,7 @@ const Meeting: React.FC = () => {
         try {
           const APP_ID: string = "44ac98e9fc0c42e2bcfa9546ff2766d8"; // Replace with your Agora App ID
           const TOKEN: string | null =
-            "007eJxTYBDeeDJ4Vr60jp2s+aR/ryf3iUxhy5um88hGLeU3Q2uDbZcCg4lJYrKlRaplWrJBsolRqlFSclqipamJWVqakbmZWYpFOpNzWkMgI4PlemtWRgYIBPFZGHITM/MYGACgFBys"; // Replace with your token if you have enabled token security
+            "007eJxTYEj73PRznsoWAcHl74/tbjslv3vXu8/C1xUnWs26fFxk2dctCgwmJonJlhaplmnJBskmRqlGSclpiZamJmZpaUbmZmYpFvvmu6Q1BDIyNE1+x8AIhSA+C0NuYmYeAwMAbh8jhQ=="; // Replace with your token if you have enabled token security
           const UID: UID | null = null; // Set UID or null to let Agora assign one
 
           await clientRef.current?.join(APP_ID, "main", TOKEN, UID);
