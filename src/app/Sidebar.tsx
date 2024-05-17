@@ -1,20 +1,31 @@
 // components/Sidebar.tsx
-import React from "react";
+import React, { useState } from "react";
 
 interface SidebarProps {
+  participants: Array<{ uid: string; cameraOn: boolean; micOn: boolean }>;
+  chatMessages: Array<{ uid: string; message: string }>;
+  onSendMessage: (message: string) => void;
   toggleSidebar: () => void;
 }
 
-const participants = [
-  { name: "Dianne Russell", cameraOn: true, micOn: true },
-  { name: "Guy Hawkins", cameraOn: false, micOn: false },
-  { name: "Kathryn Murphy", cameraOn: true, micOn: false },
-];
+const Sidebar: React.FC<SidebarProps> = ({
+  participants,
+  chatMessages,
+  onSendMessage,
+  toggleSidebar,
+}) => {
+  const [newMessage, setNewMessage] = useState("");
 
-const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
+  const handleSendMessage = () => {
+    if (newMessage.trim()) {
+      onSendMessage(newMessage);
+      setNewMessage("");
+    }
+  };
+
   return (
-    <div className="fixed top-0 right-0 h-full w-full md:w-1/3 bg-gray-800 text-white p-4 overflow-y-scroll">
-      <div className="flex justify-end md:hidden">
+    <div className="fixed top-0 right-0 h-full w-1/3 bg-gray-800 text-white p-4 overflow-y-scroll">
+      <div className="flex justify-end">
         <button onClick={toggleSidebar} className="text-white p-2">
           ✕
         </button>
@@ -22,8 +33,8 @@ const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
       <div className="mb-4">
         <h2 className="text-xl mb-2">Participants</h2>
         {participants.map((participant) => (
-          <div key={participant.name} className="flex items-center mb-2">
-            <span className="flex-grow">{participant.name}</span>
+          <div key={participant.uid} className="flex items-center mb-2">
+            <span className="flex-grow">{participant.uid}</span>
             <span
               className={`mx-1 ${participant.cameraOn ? "text-green-500" : "text-red-500"}`}
             >
@@ -43,14 +54,25 @@ const Sidebar: React.FC<SidebarProps> = ({ toggleSidebar }) => {
           className="flex-grow bg-gray-700 p-2 mb-2 overflow-y-scroll"
           style={{ height: "200px" }}
         >
-          <div className="mb-2">Kathryn: Hello!</div>
-          <div className="mb-2">Joshua: Hi there!</div>
+          {chatMessages.map((message, index) => (
+            <div key={index} className="mb-2">
+              {message.uid}: {message.message}
+            </div>
+          ))}
         </div>
         <input
           type="text"
           className="w-full p-2 bg-gray-900"
           placeholder="Type a message..."
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
         />
+        <button
+          onClick={handleSendMessage}
+          className="w-full p-2 bg-blue-500 mt-2"
+        >
+          Send
+        </button>
       </div>
     </div>
   );
