@@ -44,6 +44,9 @@ class AgoraService {
       await AgoraRTC.createMicrophoneAndCameraTracks();
     this.localVideoTrack = videoTrack;
     this.localAudioTrack = audioTrack;
+    if (this.localAudioTrack && this.localVideoTrack) {
+      console.log("its working", this.localAudioTrack, this.localVideoTrack);
+    }
   }
 
   async publishLocalTracks() {

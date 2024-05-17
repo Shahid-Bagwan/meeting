@@ -67,7 +67,11 @@ const Meeting = () => {
     };
   }, []);
   const handleAttendeeClick = (attendeeId: string) => {
-    setActiveAttendee(attendeeId);
+    if (activeAttendee === attendeeId) {
+      setActiveAttendee(null); // Revert back to local video if the same attendee is clicked again
+    } else {
+      setActiveAttendee(attendeeId); // Switch to the clicked attendee's video
+    }
   };
 
   const toggleSidebar = () => {
