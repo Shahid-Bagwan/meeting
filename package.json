@@ -12,6 +12,7 @@
     "@types/node": "20.12.12",
     "@types/react": "18.3.2",
     "@types/react-dom": "18.3.0",
+    "agora-rtc-react": "2.0.0-beta.0",
     "agora-rtc-sdk-ng": "^4.20.2",
     "agora-rtm-sdk": "^2.1.9",
     "autoprefixer": "10.4.19",

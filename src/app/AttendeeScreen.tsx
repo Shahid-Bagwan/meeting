@@ -43,54 +43,45 @@
 
 import React, { useEffect, useState } from "react";
 import { agoraService } from "./agoraService";
-import { IRemoteVideoTrack } from "agora-rtc-sdk-ng";
+import {
+  LocalVideoTrack,
+  RemoteUser,
+  useJoin,
+  useLocalCameraTrack,
+  useLocalMicrophoneTrack,
+  usePublish,
+  useRTCClient,
+  useRemoteUsers,
+  useClientEvent,
+} from "agora-rtc-react";
 
 interface AttendeeScreenProps {
   onAttendeeClick: (attendeeId: string) => void;
 }
 
 const AttendeeScreen: React.FC<AttendeeScreenProps> = ({ onAttendeeClick }) => {
-  const [attendees, setAttendees] = useState<
-    { id: string; videoTrack: IRemoteVideoTrack }[]
-  >([]);
-
-  useEffect(() => {
-    const handleUserPublished = async (user: any, mediaType: any) => {
-      await agoraService.client.subscribe(user, mediaType);
-      if (mediaType === "video") {
-        setAttendees((prev) => [
-          ...prev,
-          { id: user.uid, videoTrack: user.videoTrack },
-        ]);
-      }
-    };
-
-    agoraService.client.on("user-published", handleUserPublished);
-    return () => {
-      agoraService.client.off("user-published", handleUserPublished);
-    };
-  }, []);
+  const remoteUsers = useRemoteUsers();
 
   return (
     <div className="w-full h-3/10 bg-gray-700 overflow-x-auto">
       <div className="flex space-x-4 p-4">
-        {attendees.map((attendee) => (
+        {remoteUsers.map((remoteUser) => (
           <div
-            key={attendee.id}
+            key={remoteUser.uid}
             className="relative flex-none w-40 h-40 bg-gray-800 text-white flex items-center justify-center cursor-pointer"
-            onClick={() => onAttendeeClick(attendee.id)}
+            onClick={() => onAttendeeClick(remoteUser.uid)}
           >
-            <video
-              ref={(video) => video! && attendee.videoTrack?.play(video)}
-              className="w-full h-full"
-              autoPlay
-              muted
-            ></video>
+            <RemoteUser user={remoteUser} playVideo={true} playAudio={true} />
             <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 p-1 text-xs">
-              {attendee.id}
+              {remoteUser.uid}
             </div>
           </div>
         ))}
+        {/* {remoteUsers.map((remoteUser) => (
+          <div className="vid" style={{ height: 300, width: 600 }} key={remoteUser.uid}>
+            <RemoteUser user={remoteUser} playVideo={true} playAudio={true} />
+          </div>
+        ))} */}
       </div>
     </div>
   );
