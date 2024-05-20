@@ -69,12 +69,7 @@ const Meeting = ({
   config: configType;
   children: React.ReactNode;
 }) => {
-  const [activeAttendee, setActiveAttendee] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const handleAttendeeClick = (attendeeId: string) => {
-    setActiveAttendee((prev) => (prev === attendeeId ? null : attendeeId));
-  };
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -136,6 +131,20 @@ const Meeting = ({
     localCameraTrack?.close();
     localMicrophoneTrack?.close();
   };
+
+  const [activeStream, setActiveStream] = useState<string | null>(null);
+  const [localStreamInPresenter, setLocalStreamInPresenter] =
+    useState<boolean>(true);
+
+  const handleStreamToggle = (streamId: string) => {
+    if (activeStream === streamId) {
+      setActiveStream(null);
+      setLocalStreamInPresenter(true);
+    } else {
+      setActiveStream(streamId);
+      setLocalStreamInPresenter(false);
+    }
+  };
   return (
     <AgoraRTCProvider client={agoraEngine}>
       <AgoraProvider
@@ -145,15 +154,22 @@ const Meeting = ({
         {children}
         <div className="flex flex-col h-screen relative">
           <div className="h-[58%] bg-gray-800">
-            <LocalVideoTrack track={localCameraTrack} play={true} />
-            {/* <PresenterScreen
-              activeAttendee={activeAttendee}
-              localCameraTrack={localCameraTrack}
-              localMicrophoneTrack={localMicrophoneTrack}
-            /> */}
+            {localStreamInPresenter ? (
+              <LocalVideoTrack track={localCameraTrack} play={true} />
+            ) : (
+              <RemoteUser
+                user={remoteUsers?.find((user) => user.uid === activeStream)}
+                playVideo={true}
+                playAudio={true}
+              />
+            )}
           </div>
           <div className="h-[35%] bg-gray-700 overflow-hidden">
-            <AttendeeScreen onAttendeeClick={handleAttendeeClick} />
+            <AttendeeScreen
+              onAttendeeClick={handleStreamToggle}
+              activeStream={activeStream}
+              localCameraTrack={localCameraTrack}
+            />
           </div>
           <div className="h-[7%] bg-gray-900">
             <Controls

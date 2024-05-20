@@ -59,7 +59,11 @@ interface AttendeeScreenProps {
   onAttendeeClick: (attendeeId: string) => void;
 }
 
-const AttendeeScreen: React.FC<AttendeeScreenProps> = ({ onAttendeeClick }) => {
+const AttendeeScreen: React.FC<AttendeeScreenProps> = ({
+  onAttendeeClick,
+  activeStream,
+  localCameraTrack,
+}) => {
   const remoteUsers = useRemoteUsers();
 
   return (
@@ -71,7 +75,11 @@ const AttendeeScreen: React.FC<AttendeeScreenProps> = ({ onAttendeeClick }) => {
             className="relative flex-none w-40 h-40 bg-gray-800 text-white flex items-center justify-center cursor-pointer"
             onClick={() => onAttendeeClick(remoteUser.uid)}
           >
-            <RemoteUser user={remoteUser} playVideo={true} playAudio={true} />
+            {activeStream === remoteUser.uid ? (
+              <LocalVideoTrack track={localCameraTrack} play={true} />
+            ) : (
+              <RemoteUser user={remoteUser} playVideo={true} playAudio={true} />
+            )}
             <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 p-1 text-xs">
               {remoteUser.uid}
             </div>
