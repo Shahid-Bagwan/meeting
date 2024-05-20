@@ -138,7 +138,7 @@ const Meeting = ({
       >
         {children}
         <div className="flex flex-col h-screen relative">
-          <div className="h-1/2 bg-gray-800">
+          <div className="h-[58%] bg-gray-800">
             <LocalVideoTrack track={localCameraTrack} play={true} />
             {/* <PresenterScreen
               activeAttendee={activeAttendee}
@@ -146,10 +146,10 @@ const Meeting = ({
               localMicrophoneTrack={localMicrophoneTrack}
             /> */}
           </div>
-          <div className="h-3/10 bg-gray-700 overflow-hidden">
+          <div className="h-[35%] bg-gray-700 overflow-hidden">
             <AttendeeScreen onAttendeeClick={handleAttendeeClick} />
           </div>
-          <div className="h-1/5 bg-gray-900">
+          <div className="h-[7%] bg-gray-900">
             <Controls
               toggleSidebar={toggleSidebar}
               localCameraTrack={localCameraTrack}

@@ -10,10 +10,6 @@ const Controls: React.FC<ControlsProps> = ({
   localCameraTrack,
   localMicrophoneTrack,
 }) => {
-  const [cameraOn, setCameraOn] = useState(true);
-  const [micOn, setMicOn] = useState(true);
-  const [screenShareOn, setScreenShareOn] = useState(false);
-
   const [isCameraActive, setIsCameraActive] = useState(true);
   const [isMicrophoneActive, setIsMicrophoneActive] = useState(true);
 
