@@ -139,11 +139,12 @@ const Meeting = ({
         {children}
         <div className="flex flex-col h-screen relative">
           <div className="h-1/2 bg-gray-800">
-            <PresenterScreen
+            <LocalVideoTrack track={localCameraTrack} play={true} />
+            {/* <PresenterScreen
               activeAttendee={activeAttendee}
               localCameraTrack={localCameraTrack}
               localMicrophoneTrack={localMicrophoneTrack}
-            />
+            /> */}
           </div>
           <div className="h-3/10 bg-gray-700 overflow-hidden">
             <AttendeeScreen onAttendeeClick={handleAttendeeClick} />

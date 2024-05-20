@@ -13,7 +13,7 @@ const PresenterScreen: React.FC<PresenterScreenProps> = ({
   return (
     <div className="flex-grow bg-gray-800">
       hey there
-      <LocalVideoTrack track={localCameraTrack} play={true} />
+      {/* <LocalVideoTrack track={localCameraTrack} play={true} /> */}
     </div>
   );
 };

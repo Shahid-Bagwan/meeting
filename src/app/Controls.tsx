@@ -88,22 +88,22 @@ const Controls: React.FC<ControlsProps> = ({
   return (
     <div className="flex justify-center p-4 bg-gray-900">
       <button
-        className={`mx-2 ${cameraOn ? "text-green-500" : "text-red-500"}`}
+        className={`mx-2 ${isCameraActive ? "text-green-500" : "text-red-500"}`}
         onClick={handleToggleCamera}
       >
         Camera
       </button>
       <button
-        className={`mx-2 ${micOn ? "text-green-500" : "text-red-500"}`}
+        className={`mx-2 ${isMicrophoneActive ? "text-green-500" : "text-red-500"}`}
         onClick={handleToggleMicrophone}
       >
         Mic
       </button>
       <button
-        className={`mx-2 ${screenShareOn ? "text-green-500" : "text-red-500"}`}
+        className={`mx-2 ${isScreenSharing ? "text-green-500" : "text-red-500"}`}
         onClick={handleToggleScreenSharing}
       >
-        Share
+        {isScreenSharing ? "Stop Sharing" : "Share Screen"}
       </button>
       <button className="mx-2 text-white">End Call</button>
       <button className="mx-2 text-white" onClick={toggleSidebar}>
