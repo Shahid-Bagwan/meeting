@@ -130,6 +130,12 @@ const Meeting = ({
       // screenShareClient.current.leave();
     };
   }, []);
+
+  const leaveChannel = async () => {
+    await agoraEngine.leave();
+    localCameraTrack?.close();
+    localMicrophoneTrack?.close();
+  };
   return (
     <AgoraRTCProvider client={agoraEngine}>
       <AgoraProvider
@@ -154,6 +160,7 @@ const Meeting = ({
               toggleSidebar={toggleSidebar}
               localCameraTrack={localCameraTrack}
               localMicrophoneTrack={localMicrophoneTrack}
+              leaveChannel={leaveChannel}
             />
           </div>
           {sidebarOpen && <Sidebar toggleSidebar={toggleSidebar} />}

@@ -1,6 +1,6 @@
 // components/Sidebar.tsx
 import React, { useState } from "react";
-
+import { useRemoteUsers } from "agora-rtc-react";
 interface SidebarProps {
   participants: Array<{ uid: string; cameraOn: boolean; micOn: boolean }>;
   chatMessages: Array<{ uid: string; message: string }>;
@@ -15,7 +15,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   toggleSidebar,
 }) => {
   const [newMessage, setNewMessage] = useState("");
-
+  const remoteUsers = useRemoteUsers();
+  // const {data: session} = usesession();
   return (
     <div className="fixed top-0 right-0 h-full w-1/3 bg-gray-800 text-white p-4 overflow-y-scroll">
       <div className="flex justify-end">
@@ -25,16 +26,16 @@ const Sidebar: React.FC<SidebarProps> = ({
       </div>
       <div className="mb-4">
         <h2 className="text-xl mb-2">Participants</h2>
-        {participants?.map((participant) => (
-          <div key={participant.uid} className="flex items-center mb-2">
-            <span className="flex-grow">{participant.uid}</span>
+        {remoteUsers?.map((user) => (
+          <div key={user?.uid} className="flex items-center mb-2">
+            <span className="flex-grow">{user?.uid}</span>
             <span
-              className={`mx-1 ${participant.cameraOn ? "text-green-500" : "text-red-500"}`}
+              className={`mx-1 ${user?.videoTrack ? "bg-green-500" : "bg-red-500"}`}
             >
               📷
             </span>
             <span
-              className={`mx-1 ${participant.micOn ? "text-green-500" : "text-red-500"}`}
+              className={`mx-1 ${user?.audioTrack ? "bg-green-500" : "bg-red-500"}`}
             >
               🎤
             </span>

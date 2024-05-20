@@ -9,6 +9,7 @@ const Controls: React.FC<ControlsProps> = ({
   toggleSidebar,
   localCameraTrack,
   localMicrophoneTrack,
+  leaveChannel,
 }) => {
   const [isCameraActive, setIsCameraActive] = useState(true);
   const [isMicrophoneActive, setIsMicrophoneActive] = useState(true);
@@ -101,7 +102,9 @@ const Controls: React.FC<ControlsProps> = ({
       >
         {isScreenSharing ? "Stop Sharing" : "Share Screen"}
       </button>
-      <button className="mx-2 text-white">End Call</button>
+      <button className="mx-2 text-white" onClick={leaveChannel}>
+        End Call
+      </button>
       <button className="mx-2 text-white" onClick={toggleSidebar}>
         Chat
       </button>
