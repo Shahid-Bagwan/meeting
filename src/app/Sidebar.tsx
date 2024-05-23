@@ -1,5 +1,6 @@
 // components/Sidebar.tsx
 import React from "react";
+import Image from "next/image";
 import { useRemoteUsers } from "agora-rtc-react";
 interface SidebarProps {
   participants: Array<{ uid: string; cameraOn: boolean; micOn: boolean }>;
@@ -60,27 +61,33 @@ const Sidebar: React.FC<SidebarProps> = ({
   //   });
   // };
   return (
-    <div className="fixed top-0 right-0 h-full w-1/3 bg-gray-800 text-white p-4 overflow-y-scroll">
+    <div className="fixed top-0 right-0 h-full w-1/3 bg-white  text-white p-4 overflow-y-scroll">
       <div className="flex justify-end">
         <button onClick={toggleSidebar} className="text-white p-2">
           ✕
         </button>
       </div>
       <div className="mb-4">
-        <h2 className="text-xl mb-2">Participants</h2>
+        <h2 className="text-xl mb-2 bg-[#242737] py-6 pl-4 rounded-2xl">
+          Participants
+        </h2>
         {remoteUsers?.map((user) => (
           <div key={user?.uid} className="flex items-center mb-2">
-            <span className="flex-grow">{user?.uid}</span>
-            <span
-              className={`mx-1 ${user?.videoTrack ? "bg-green-500" : "bg-red-500"}`}
-            >
-              📷
-            </span>
-            <span
-              className={`mx-1 ${user?.audioTrack ? "bg-green-500" : "bg-red-500"}`}
-            >
-              🎤
-            </span>
+            <span className="flex-grow text-black ml-2">{user?.uid}</span>
+            <Image
+              src={user?.videoTrack ? "/cam-on.png" : "/cam-off.png"}
+              alt=""
+              width={40}
+              height={40}
+              className="mx-2"
+            />
+            <Image
+              className="mx-2"
+              src={user?.audioTrack ? "/mic-on.png" : "/mic-off.png"}
+              alt=""
+              width={40}
+              height={40}
+            />
           </div>
         ))}
       </div>
