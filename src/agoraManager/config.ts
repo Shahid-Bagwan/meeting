@@ -2,16 +2,15 @@ import { EncryptionMode, UID, SDK_MODE } from "agora-rtc-sdk-ng";
 
 const config: configType = {
   uid: 0,
-  testuid: "",
   appId: "44ac98e9fc0c42e2bcfa9546ff2766d8",
   channelName: "main",
   rtcToken:
-    "007eJxTYAhmVd3D0ZCYWh8fEH3B8vQT+7frVt1MOpXOful9iOcy7akKDCYmicmWFqmWackGySZGqUZJyWmJlqYmZmlpRuZmZikWex/5pjUEMjLI+4szMjJAIIjPwpCbmJnHwAAAPDgfIg==",
+    "007eJxTYFiY/I/x9P1EPdblWgyu+w2uOp133VPd9JcpXGDZq/nujcwKDCYmicmWFqmWackGySZGqUZJyWmJlqYmZmlpRuZmZikWSdn+aQ2BjAyMUrsYGKEQxGdhyE3MzGNgAADzXx2o",
   serverUrl: "",
   proxyUrl: "http://localhost:8080/",
   tokenExpiryTime: 600,
   token:
-    "007eJxTYAhmVd3D0ZCYWh8fEH3B8vQT+7frVt1MOpXOful9iOcy7akKDCYmicmWFqmWackGySZGqUZJyWmJlqYmZmlpRuZmZikWex/5pjUEMjLI+4szMjJAIIjPwpCbmJnHwAAAPDgfIg==",
+    "007eJxTYFiY/I/x9P1EPdblWgyu+w2uOp133VPd9JcpXGDZq/nujcwKDCYmicmWFqmWackGySZGqUZJyWmJlqYmZmlpRuZmZikWSdn+aQ2BjAyMUrsYGKEQxGdhyE3MzGNgAADzXx2o",
   encryptionMode: "aes-128-gcm2",
   salt: "",
   encryptionKey: "",

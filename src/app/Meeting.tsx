@@ -1,9 +1,7 @@
 "use client";
-// import dynamic from "next/dynamic";
 import AttendeeScreen from "./AttendeeScreen";
 import Controls from "./Controls";
 import Sidebar from "./Sidebar";
-// const Meeting = dynamic(() => import("./Meeting"), { ssr: false });
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 import {
@@ -22,8 +20,7 @@ import AgoraRTC, {
   IMicrophoneAudioTrack,
   ICameraVideoTrack,
 } from "agora-rtc-sdk-ng";
-import { AgoraManager } from "../agoraManager/agoraManager";
-import config from "../agoraManager/config";
+import config, { configType } from "../agoraManager/config";
 
 // Define the shape of the Agora context
 interface AgoraContextType {
@@ -71,7 +68,9 @@ const Meeting = ({
   // webrtc code
   const agoraEngine = useRTCClient();
   // Retrieve local camera and microphone tracks and remote users
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isLoading: isLoadingCam, localCameraTrack } = useLocalCameraTrack();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isLoading: isLoadingMic, localMicrophoneTrack } =
     useLocalMicrophoneTrack();
   const remoteUsers = useRemoteUsers();
@@ -95,7 +94,7 @@ const Meeting = ({
     console.log("The user", user.uid, " has left the channel");
   });
 
-  useClientEvent(agoraEngine, "user-published", (user, mediaType) => {
+  useClientEvent(agoraEngine, "user-published", (user) => {
     console.log("The user", user.uid, " has published media in the channel");
   });
 
@@ -118,11 +117,13 @@ const Meeting = ({
     localMicrophoneTrack?.close();
   };
 
-  const [activeStream, setActiveStream] = useState<string | null>(null);
+  const [activeStream, setActiveStream] = useState<string | number | null>(
+    null
+  );
   const [localStreamInPresenter, setLocalStreamInPresenter] =
     useState<boolean>(true);
 
-  const handleStreamToggle = (streamId: string) => {
+  const handleStreamToggle = (streamId: string | number) => {
     if (activeStream === streamId) {
       setActiveStream(null);
       setLocalStreamInPresenter(true);
@@ -172,7 +173,6 @@ const Meeting = ({
           </div>
         </div>
       </AgoraProvider>
-      {/* <AgoraManager config={config}></AgoraManager> */}
     </AgoraRTCProvider>
   );
 };
@@ -185,6 +185,8 @@ const Main = () => {
   return (
     <div>
       <AgoraRTCProvider client={agoraEngine}>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-expect-error */}
         <Meeting config={config}></Meeting>
       </AgoraRTCProvider>
     </div>

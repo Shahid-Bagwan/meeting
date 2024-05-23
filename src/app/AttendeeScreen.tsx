@@ -1,8 +1,10 @@
 import React from "react";
 import { LocalVideoTrack, RemoteUser, useRemoteUsers } from "agora-rtc-react";
-
+import { ICameraVideoTrack } from "agora-rtc-sdk-ng";
 interface AttendeeScreenProps {
-  onAttendeeClick: (attendeeId: string) => void;
+  onAttendeeClick: (attendeeId: string | number) => void;
+  activeStream: string | number | null;
+  localCameraTrack: ICameraVideoTrack | null;
 }
 
 const AttendeeScreen: React.FC<AttendeeScreenProps> = ({

@@ -1,9 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
-import AgoraRTC from "agora-rtc-sdk-ng";
 import config from "../agoraManager/config";
 import Image from "next/image";
+
+import AgoraRTC, {
+  ICameraVideoTrack,
+  IMicrophoneAudioTrack,
+} from "agora-rtc-sdk-ng";
 interface ControlsProps {
+  sidebarOpen: boolean;
   toggleSidebar: () => void;
+  localCameraTrack: ICameraVideoTrack | null;
+  localMicrophoneTrack: IMicrophoneAudioTrack | null; // to be done later
+  leaveChannel: () => void;
 }
 
 const Controls: React.FC<ControlsProps> = ({
@@ -15,7 +23,6 @@ const Controls: React.FC<ControlsProps> = ({
 }) => {
   const [isCameraActive, setIsCameraActive] = useState(true);
   const [isMicrophoneActive, setIsMicrophoneActive] = useState(true);
-
   const screenShareClient = useRef(
     AgoraRTC.createClient({ codec: "vp8", mode: "rtc" })
   );
@@ -53,6 +60,8 @@ const Controls: React.FC<ControlsProps> = ({
           null
         );
         await screenShareClient.current.publish(screenTrack);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         setScreenTrack(screenTrack);
         setIsScreenSharing(true);
         console.log("Screen sharing started");
