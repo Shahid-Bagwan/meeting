@@ -139,7 +139,7 @@ const Meeting = ({
       >
         {children}
         <div className="flex flex-col h-screen relative p-6">
-          <div className="h-[58%] ">
+          <div className="h-[58%]  " id="custom-style-presenter">
             {localStreamInPresenter ? (
               <LocalVideoTrack track={localCameraTrack} play={true} />
             ) : (

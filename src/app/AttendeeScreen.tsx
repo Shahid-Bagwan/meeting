@@ -18,7 +18,7 @@ const AttendeeScreen: React.FC<AttendeeScreenProps> = ({
         {remoteUsers.map((remoteUser) => (
           <div
             key={remoteUser.uid}
-            className="relative flex-none w-40 h-40  text-white flex items-center justify-center cursor-pointer "
+            className="relative flex-none w-40 h-40  text-white flex items-center justify-center cursor-pointer custom-style"
             onClick={() => onAttendeeClick(remoteUser.uid)}
           >
             {activeStream === remoteUser.uid ? (

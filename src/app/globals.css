@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-style :nth-child(1) {
+  border-radius: 5% !important;
+  background-color: #797979 !important;
+}
+#custom-style-presenter > div > div {
+  border-radius: 5% !important;
+  background-color: #797979 !important;
+}
