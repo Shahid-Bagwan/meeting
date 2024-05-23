@@ -1,17 +1,10 @@
 "use client";
 // import dynamic from "next/dynamic";
-import PresenterScreen from "./PresenterScreen";
 import AttendeeScreen from "./AttendeeScreen";
 import Controls from "./Controls";
 import Sidebar from "./Sidebar";
 // const Meeting = dynamic(() => import("./Meeting"), { ssr: false });
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-} from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 import {
   AgoraRTCProvider,
@@ -82,14 +75,7 @@ const Meeting = ({
   const { isLoading: isLoadingMic, localMicrophoneTrack } =
     useLocalMicrophoneTrack();
   const remoteUsers = useRemoteUsers();
-  // const [role, setRole] = useState("host"); // Default role is host
-  // // Add state variables to keep track of camera and microphone status
-  // const [isCameraActive, setIsCameraActive] = useState(true);
-  // const [isMicrophoneActive, setIsMicrophoneActive] = useState(true);
 
-  // const screenShareClient = useRef(AgoraRTC.createClient({ codec: "vp8", mode: "rtc" }));
-  // const [isScreenSharing, setIsScreenSharing] = useState(false);
-  // const [screenTrack, setScreenTrack] = useState<ICameraVideoTrack | null>(null);
   // Publish local tracks
   usePublish([localMicrophoneTrack, localCameraTrack]);
 
@@ -152,8 +138,8 @@ const Meeting = ({
         localMicrophoneTrack={localMicrophoneTrack}
       >
         {children}
-        <div className="flex flex-col h-screen relative">
-          <div className="h-[58%] bg-gray-800">
+        <div className="flex flex-col h-screen relative p-6">
+          <div className="h-[58%] ">
             {localStreamInPresenter ? (
               <LocalVideoTrack track={localCameraTrack} play={true} />
             ) : (
@@ -164,15 +150,16 @@ const Meeting = ({
               />
             )}
           </div>
-          <div className="h-[35%] bg-gray-700 overflow-hidden">
+          <div className="h-[35%] overflow-hidden">
             <AttendeeScreen
               onAttendeeClick={handleStreamToggle}
               activeStream={activeStream}
               localCameraTrack={localCameraTrack}
             />
           </div>
-          <div className="h-[7%] bg-gray-900">
+          <div className="h-[7%] ">
             <Controls
+              sidebarOpen={sidebarOpen}
               toggleSidebar={toggleSidebar}
               localCameraTrack={localCameraTrack}
               localMicrophoneTrack={localMicrophoneTrack}

@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
 import config from "../agoraManager/config";
+import Image from "next/image";
 interface ControlsProps {
   toggleSidebar: () => void;
 }
 
 const Controls: React.FC<ControlsProps> = ({
+  sidebarOpen,
   toggleSidebar,
   localCameraTrack,
   localMicrophoneTrack,
@@ -83,30 +85,57 @@ const Controls: React.FC<ControlsProps> = ({
     };
   }, []);
   return (
-    <div className="flex justify-center p-4 bg-gray-900">
+    <div className="flex justify-center p-4 ">
       <button
         className={`mx-2 ${isCameraActive ? "text-green-500" : "text-red-500"}`}
         onClick={handleToggleCamera}
       >
-        Camera
+        <Image
+          src={isCameraActive ? "/cam-on.png" : "/cam-off.png"}
+          alt=""
+          width={40}
+          height={40}
+        />
       </button>
       <button
         className={`mx-2 ${isMicrophoneActive ? "text-green-500" : "text-red-500"}`}
         onClick={handleToggleMicrophone}
       >
-        Mic
+        <Image
+          src={isMicrophoneActive ? "/mic-on.png" : "/mic-off.png"}
+          alt=""
+          width={40}
+          height={40}
+        />
       </button>
       <button
         className={`mx-2 ${isScreenSharing ? "text-green-500" : "text-red-500"}`}
         onClick={handleToggleScreenSharing}
       >
-        {isScreenSharing ? "Stop Sharing" : "Share Screen"}
+        <Image
+          src={
+            isScreenSharing ? "/screen-share-on.png" : "/screen-share-off.png"
+          }
+          alt=""
+          width={40}
+          height={40}
+        />
       </button>
-      <button className="mx-2 text-white" onClick={leaveChannel}>
-        End Call
-      </button>
+
       <button className="mx-2 text-white" onClick={toggleSidebar}>
-        Chat
+        <Image
+          src={sidebarOpen ? "/sidebar-on.png" : "/sidebar-off.png"}
+          alt=""
+          width={40}
+          height={40}
+        />
+      </button>
+
+      <button
+        className="mx-2 ml-24 text-white text-xs bg-[#FF4949] rounded-xl p-4  "
+        onClick={leaveChannel}
+      >
+        <span className="mb-5">End Call</span>
       </button>
     </div>
   );

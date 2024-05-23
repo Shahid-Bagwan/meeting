@@ -2,14 +2,16 @@ import { EncryptionMode, UID, SDK_MODE } from "agora-rtc-sdk-ng";
 
 const config: configType = {
   uid: 0,
+  testuid: "",
   appId: "44ac98e9fc0c42e2bcfa9546ff2766d8",
   channelName: "main",
   rtcToken:
-    "007eJxTYNhkozDt7W4J9/dTCzvW3QhubV5+pVXgvu8uqefShb3pYhwKDCYmicmWFqmWackGySZGqUZJyWmJlqYmZmlpRuZmZikWG357pjUEMjK4HMxgZWSAQBCfhSE3MTOPgQEAgqsgMQ==",
+    "007eJxTYAhmVd3D0ZCYWh8fEH3B8vQT+7frVt1MOpXOful9iOcy7akKDCYmicmWFqmWackGySZGqUZJyWmJlqYmZmlpRuZmZikWex/5pjUEMjLI+4szMjJAIIjPwpCbmJnHwAAAPDgfIg==",
   serverUrl: "",
   proxyUrl: "http://localhost:8080/",
   tokenExpiryTime: 600,
-  token: "",
+  token:
+    "007eJxTYAhmVd3D0ZCYWh8fEH3B8vQT+7frVt1MOpXOful9iOcy7akKDCYmicmWFqmWackGySZGqUZJyWmJlqYmZmlpRuZmZikWex/5pjUEMjLI+4szMjJAIIjPwpCbmJnHwAAAPDgfIg==",
   encryptionMode: "aes-128-gcm2",
   salt: "",
   encryptionKey: "",
@@ -20,6 +22,11 @@ const config: configType = {
   secondChannelToken: "",
   secondChannelUID: 2,
   selectedProduct: "rtc",
+  presenceTimeout: 300,
+  logUpload: false,
+  logLevel: "debug",
+  cloudProxy: true,
+  useStringUserId: true,
 };
 
 export type configType = {
@@ -41,6 +48,11 @@ export type configType = {
   secondChannelToken: string;
   secondChannelUID: number;
   selectedProduct: SDK_MODE;
+  presenceTimeout: number;
+  logUpload: boolean;
+  logLevel: string;
+  cloudProxy: boolean;
+  useStringUserId: boolean;
 };
 
 export default config;

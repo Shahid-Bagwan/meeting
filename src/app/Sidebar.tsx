@@ -1,5 +1,5 @@
 // components/Sidebar.tsx
-import React, { useState } from "react";
+import React from "react";
 import { useRemoteUsers } from "agora-rtc-react";
 interface SidebarProps {
   participants: Array<{ uid: string; cameraOn: boolean; micOn: boolean }>;
@@ -9,14 +9,56 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
-  participants,
-  chatMessages,
+  // participants,
+  // chatMessages,
   // onSendMessage,
   toggleSidebar,
 }) => {
-  const [newMessage, setNewMessage] = useState("");
+  // const [newMessage, setNewMessage] = useState("");
   const remoteUsers = useRemoteUsers();
   // const {data: session} = usesession();
+
+  // const [message, setMessage] = useState("");
+  // const [messages, setMessages] = useState<string[]>([]);
+
+  // useEffect(() => {
+  //   const userID = `usesre`;
+
+  //   const messageCallback = (msg: string) => {
+  //     setMessages((prevMessages) => [...prevMessages, msg]);
+  //   };
+
+  //   const eventsCallback = (event: string, eventArgs: any) => {
+  //     console.log("Event:", event, eventArgs);
+  //   };
+
+  //   SignalingManager(messageCallback, eventsCallback, null)
+  //     .then((manager) => {
+  //       manager.login(userID, null);
+  //       manager.createChannel("main");
+  //       manager.subscribe("main");
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error initializing signaling manager:", error);
+  //     });
+
+  //   return () => {
+  //     SignalingManager(messageCallback, eventsCallback, null).then(
+  //       (manager) => {
+  //         manager.unsubscribe("main");
+  //         manager.logout();
+  //       }
+  //     );
+  //   };
+  // }, []);
+
+  // const handleSendMessage = () => {
+  //   SignalingManager(null, null, null).then((manager) => {
+  //     manager.sendChannelMessage("main", message);
+  //     setMessages((prevMessages) => [...prevMessages, `You: ${message}`]);
+  //     setMessage("");
+  //   });
+  // };
   return (
     <div className="fixed top-0 right-0 h-full w-1/3 bg-gray-800 text-white p-4 overflow-y-scroll">
       <div className="flex justify-end">
@@ -42,27 +84,30 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
         ))}
       </div>
-      <div>
+      {/* <div>
         <h2 className="text-xl mb-2">Chat</h2>
         <div
           className="flex-grow bg-gray-700 p-2 mb-2 overflow-y-scroll"
           style={{ height: "200px" }}
         >
-          {chatMessages?.map((message, index) => (
+           {chatMessages?.map((message, index) => (
             <div key={index} className="mb-2">
               {message.uid}: {message.message}
             </div>
+          ))} 
+          {messages.map((msg, index) => (
+            <div key={index}>{msg}</div>
           ))}
         </div>
         <input
           type="text"
           className="w-full p-2 bg-gray-900"
           placeholder="Type a message..."
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
-        <button className="w-full p-2 bg-blue-500 mt-2">Send</button>
-      </div>
+        <button onClick={handleSendMessage}>Send</button>
+      </div> */}
     </div>
   );
 };
